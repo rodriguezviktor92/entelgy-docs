@@ -2,55 +2,27 @@
 import { Box, Card, Container, Grid, Text } from '@radix-ui/themes';
 import Link from 'next/link';
 import { Search } from './components/Search';
-import { useCallback, useEffect, useState } from 'react';
-
-// function searchQuestion() {
-//   return fetch('https://randomuser.me/api/?results=50').then((res) =>
-//     res.json()
-//   );
-// }
+import { useState } from 'react';
+import { useData } from './context/DataContext';
 
 export default function Post() {
-  // const { results } = await searchQuestion();
-  const [inputValue, setInputValue] = useState('');
-  const [users, setUsers] = useState('');
-  const [filteredList, setFilteredList] = useState(users);
+  const [searchValue, setSearchValue] = useState('');
+  const { users } = useData();
 
-  useEffect(() => {
-    fetch('https://randomuser.me/api/?results=50')
-      .then(async (res) => await res.json())
-      .then((res) => {
-        setUsers(res.results);
-      });
-  }, []);
-
-  // Search Handler
-  const searchHandler = useCallback(() => {
-    const filteredData = users.filter((user) => {
-      return user.name.first.toLowerCase().includes(inputValue.toLowerCase());
-    });
-    setFilteredList(filteredData);
-  }, [users, inputValue]);
-
-  // EFFECT: Search Handler
-  useEffect(() => {
-    // Debounce search handler
-    const timer = setTimeout(() => {
-      searchHandler();
-    }, 500);
-
-    // Cleanup
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [searchHandler]);
+  const filteredList = searchValue
+    ? users.filter((user) => {
+        return user.name.first
+          .toLowerCase()
+          .includes(searchValue.toLowerCase());
+      })
+    : users;
 
   return (
     <Box className='w-full'>
       <Container className='items-start'>
-        <Search inputValue={inputValue} setInputValue={setInputValue} />
+        <Search searchValue={searchValue} setSearchValue={setSearchValue} />
       </Container>
-      {filteredList ? (
+      {filteredList.length ? (
         <Grid
           columns='3'
           gap='6'
@@ -74,12 +46,9 @@ export default function Post() {
         </Grid>
       ) : (
         <div className='relative h-screen flex-col flex justify-center items-center'>
-          <h1 className='mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white'>
-            Sorry
-          </h1>
-          <p className=' mb-6 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400'>
-            Post Not Found
-          </p>
+          <Text as='span' size='6' weight='bold'>
+            {searchValue ? 'Post Not Found' : 'Loading...'}
+          </Text>
         </div>
       )}
     </Box>

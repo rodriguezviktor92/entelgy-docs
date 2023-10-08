@@ -2,13 +2,14 @@
 import React from 'react';
 import '@radix-ui/themes/styles.css';
 import { createContext, useState } from 'react';
-import { Box, Container, Text } from '@radix-ui/themes';
+import { Container, Text } from '@radix-ui/themes';
 import { PinLeftIcon } from '@radix-ui/react-icons';
 import { Search } from './Search';
+import { useData } from '../context/DataContext';
 
-const SidebarContext = createContext();
+// const SidebarContext = createContext();
 
-export function Sidebar({ children }) {
+export function Sidebar({ categories }) {
   const [expanded, setExpanded] = useState(true);
 
   return (
@@ -22,7 +23,11 @@ export function Sidebar({ children }) {
 
       <aside className='h-screen'>
         <nav className='h-full flex flex-col  shadow-sm pt-8'>
-          <ul className='flex-1'>{children}</ul>
+          <ul className='flex-1'>
+            {categories.map((category, index) => (
+              <SidebarItem key={index} text='male' alert />
+            ))}
+          </ul>
         </nav>
       </aside>
     </Container>
@@ -33,14 +38,32 @@ export function SidebarItem({ icon, text, active, alert }) {
   // const { expanded } = useContext(SidebarContext);
   const expanded = true;
 
+  const { users, setUsers, originalUsers } = useData();
+  const [currentCategory, setCurrentCategory] = useState('');
+
+  function handlerCategory(category) {
+    if (category === currentCategory) {
+      setUsers(originalUsers.current);
+      setCurrentCategory('');
+      return;
+    }
+
+    const filteredData = users.filter((user) => {
+      return user.gender.toLowerCase() === category;
+    });
+    setUsers(filteredData);
+    setCurrentCategory(category);
+  }
+
   return (
     <li
+      onClick={() => handlerCategory('male')}
       className={`
         relative flex items-center py-2 my-1
         font-medium rounded-md cursor-pointer
         transition-colors group
         ${
-          active
+          currentCategory === text
             ? 'bg-gradient-to-tr from-slate-400 to-slate-300 text-indigo-800'
             : 'hover:bg-gray-600'
         }

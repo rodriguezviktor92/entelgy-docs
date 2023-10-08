@@ -3,16 +3,16 @@
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
 import { TextField } from '@radix-ui/themes';
 
-export function Search({ inputValue, setInputValue }) {
+export function Search({ searchValue, setSearchValue }) {
   return (
     <TextField.Root>
       <TextField.Slot>
         <MagnifyingGlassIcon height='16' width='16' />
       </TextField.Slot>
       <TextField.Input
-        value={inputValue}
+        value={searchValue}
         onChange={(event) => {
-          setInputValue(event.target.value);
+          setSearchValue(event.target.value);
         }}
         placeholder='Search the docs…'
       />

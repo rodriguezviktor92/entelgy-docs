@@ -1,10 +1,9 @@
-import { Box, Container } from '@radix-ui/themes';
+import { Box } from '@radix-ui/themes';
 import Link from 'next/link';
 async function searchQuestion() {}
 
 export default async function Category({ params }) {
   const { slug } = params;
-  const post = await searchQuestion(slug);
 
   return (
     <Box className='w-full'>
