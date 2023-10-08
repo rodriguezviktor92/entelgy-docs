@@ -23,7 +23,7 @@ export default function RootLayout({ children }) {
           <main className=' p-6'>
             <Header />
             <div
-              className='w-full flex flex-col items-start mt-9 p-5'
+              className='w-full flex items-start mt-9 p-5'
               style={{
                 background: 'var(--gray-a2)',
                 borderRadius: 'var(--radius-3)',

@@ -1,29 +1,63 @@
+'use client';
 import { Box, Card, Container, Grid, Text } from '@radix-ui/themes';
 import Link from 'next/link';
 import { Search } from './components/Search';
+import { useCallback, useEffect, useState } from 'react';
 
-function searchQuestion() {
-  return fetch('https://randomuser.me/api/?results=50').then((res) =>
-    res.json()
-  );
-}
+// function searchQuestion() {
+//   return fetch('https://randomuser.me/api/?results=50').then((res) =>
+//     res.json()
+//   );
+// }
 
-export default async function Post() {
-  const { results } = await searchQuestion();
+export default function Post() {
+  // const { results } = await searchQuestion();
+  const [inputValue, setInputValue] = useState('');
+  const [users, setUsers] = useState('');
+  const [filteredList, setFilteredList] = useState(users);
+
+  useEffect(() => {
+    fetch('https://randomuser.me/api/?results=50')
+      .then(async (res) => await res.json())
+      .then((res) => {
+        setUsers(res.results);
+      });
+  }, []);
+
+  // Search Handler
+  const searchHandler = useCallback(() => {
+    const filteredData = users.filter((user) => {
+      return user.name.first.toLowerCase().includes(inputValue.toLowerCase());
+    });
+    setFilteredList(filteredData);
+  }, [users, inputValue]);
+
+  // EFFECT: Search Handler
+  useEffect(() => {
+    // Debounce search handler
+    const timer = setTimeout(() => {
+      searchHandler();
+    }, 500);
+
+    // Cleanup
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [searchHandler]);
 
   return (
     <Box className='w-full'>
       <Container className='items-start'>
-        <Search />
+        <Search inputValue={inputValue} setInputValue={setInputValue} />
       </Container>
-      {results ? (
+      {filteredList ? (
         <Grid
           columns='3'
           gap='6'
           pt='6'
           className='sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
         >
-          {results.map(({ gender, email }, index) => (
+          {filteredList.map(({ gender, email }, index) => (
             <Box key={index}>
               <Card asChild>
                 <Link href={`${index}`}>
