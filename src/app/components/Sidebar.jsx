@@ -3,6 +3,8 @@ import React from 'react';
 import '@radix-ui/themes/styles.css';
 import { createContext, useState } from 'react';
 import { Box, Container, Text } from '@radix-ui/themes';
+import { PinLeftIcon } from '@radix-ui/react-icons';
+import { Search } from './Search';
 
 const SidebarContext = createContext();
 
@@ -11,7 +13,13 @@ export function Sidebar({ children }) {
 
   return (
     <Container size='1' className=' w-[15rem]'>
-      <Box />
+      <div className='flex gap-2 justify-start'>
+        <button className='p-1.5 rounded-lg'>
+          <PinLeftIcon />
+        </button>
+        <Search />
+      </div>
+
       <aside className='h-screen'>
         <nav className='h-full flex flex-col  shadow-sm pt-8'>
           <ul className='flex-1'>{children}</ul>

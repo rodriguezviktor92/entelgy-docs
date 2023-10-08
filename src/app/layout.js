@@ -29,24 +29,6 @@ export default function RootLayout({ children }) {
                 borderRadius: 'var(--radius-3)',
               }}
             >
-              <Flex width='100%' className='pt-4 gap-14'>
-                <Container size='1' className=' max-w-[15rem]'>
-                  <div className='flex gap-2 justify-start'>
-                    <button className='p-1.5 rounded-lg'>
-                      <PinLeftIcon />
-                    </button>
-                    <Search />
-                  </div>
-                </Container>
-                <Container className='items-start'>
-                  <div className='w-full flex items-start'>
-                    <Link className='hover:underline' href='/'>
-                      ← Back
-                    </Link>
-                  </div>
-                  <Search />
-                </Container>
-              </Flex>
               <Flex width='100%' className='gap-14'>
                 <Sidebar>
                   <SidebarItem text='Cells' alert />

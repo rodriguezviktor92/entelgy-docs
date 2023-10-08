@@ -1,5 +1,6 @@
-import { Box, Card, Grid, Text } from '@radix-ui/themes';
+import { Box, Card, Container, Grid, Text } from '@radix-ui/themes';
 import Link from 'next/link';
+import { Search } from './components/Search';
 
 function searchQuestion() {
   return fetch('https://randomuser.me/api/?results=50').then((res) =>
@@ -12,6 +13,9 @@ export default async function Post() {
 
   return (
     <Box className='w-full'>
+      <Container className='items-start'>
+        <Search />
+      </Container>
       {results ? (
         <Grid
           columns='3'
