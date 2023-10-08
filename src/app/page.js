@@ -8,17 +8,14 @@ const data = [
 
 export default function Post() {
   return (
-    <Container
-      className=''
-      size='4'
-      p='4'
-      style={{
-        background: 'var(--gray-a2)',
-        borderRadius: 'var(--radius-3)',
-      }}
-    >
+    <Box className='w-full'>
       {data ? (
-        <Grid columns='3' gap='6' pt='6'>
+        <Grid
+          columns='3'
+          gap='6'
+          pt='6'
+          className='sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
+        >
           {data.map((e, index) => (
             <Box key={index}>
               <Card asChild>
@@ -44,14 +41,6 @@ export default function Post() {
           </p>
         </div>
       )}
-      {/* <iframe
-        className='p-4'
-        src='https://drive.google.com/file/d/199hPCkOfxgXWFO5DlrEtzDVaivGPshdm/preview'
-        allow='autoplay'
-        height='100%'
-        width='100%'
-        display='block'
-      ></iframe> */}
-    </Container>
+    </Box>
   );
 }

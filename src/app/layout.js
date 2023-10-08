@@ -20,26 +20,25 @@ export default function RootLayout({ children }) {
     <html lang='en'>
       <body className={inter.className}>
         <Theme appearance='dark'>
-          <main className='h-screen p-4'>
+          <main className=' p-6'>
             <Header />
-            <div className='w-full flex flex-col items-start mt-9'>
-              <Flex
-                width='100%'
-                className='pt-4 gap-14'
-                style={{
-                  background: 'var(--gray-a2)',
-                  borderRadius: 'var(--radius-3)',
-                }}
-              >
+            <div
+              className='w-full flex flex-col items-start mt-9 p-5'
+              style={{
+                background: 'var(--gray-a2)',
+                borderRadius: 'var(--radius-3)',
+              }}
+            >
+              <Flex width='100%' className='pt-4 gap-14'>
                 <Container size='1' className=' max-w-[15rem]'>
-                  <div className='flex gap-2 justify-end px-3'>
+                  <div className='flex gap-2 justify-start'>
                     <button className='p-1.5 rounded-lg'>
                       <PinLeftIcon />
                     </button>
                     <Search />
                   </div>
                 </Container>
-                <Container className=' items-start'>
+                <Container className='items-start'>
                   <div className='w-full flex items-start'>
                     <Link className='hover:underline' href='/'>
                       ← Back
@@ -48,7 +47,7 @@ export default function RootLayout({ children }) {
                   <Search />
                 </Container>
               </Flex>
-              <Flex width='100%'>
+              <Flex width='100%' className='gap-14'>
                 <Sidebar>
                   <SidebarItem text='Cells' alert />
                   <SidebarItem text='ASO & APX' alert />
