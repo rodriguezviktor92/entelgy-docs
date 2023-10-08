@@ -1,30 +1,33 @@
-import { Search } from '@/app/components/Search';
-import { Box, Card, Container, Grid, Section, Text } from '@radix-ui/themes';
+import { Box, Card, Grid, Text } from '@radix-ui/themes';
 import Link from 'next/link';
 
-const data = [
-  1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2,
-];
+function searchQuestion() {
+  return fetch('https://randomuser.me/api/?results=50').then((res) =>
+    res.json()
+  );
+}
 
-export default function Post() {
+export default async function Post() {
+  const { results } = await searchQuestion();
+
   return (
     <Box className='w-full'>
-      {data ? (
+      {results ? (
         <Grid
           columns='3'
           gap='6'
           pt='6'
           className='sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
         >
-          {data.map((e, index) => (
+          {results.map(({ gender, email }, index) => (
             <Box key={index}>
               <Card asChild>
                 <Link href={`${index}`}>
                   <Text as='div' size='2' weight='bold'>
-                    Quick start
+                    {gender}
                   </Text>
                   <Text as='div' color='gray' size='2'>
-                    Start building your next project in minutes
+                    {email}
                   </Text>
                 </Link>
               </Card>
