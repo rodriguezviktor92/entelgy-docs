@@ -11,6 +11,8 @@ export const useData = () => {
 
 export const DataProvider = ({ children }) => {
   const [posts, setPosts] = useState([]);
+  const [currentCategory, setCurrentCategory] = useState('');
+
   const originalPosts = useRef([]);
 
   useEffect(() => {
@@ -23,7 +25,15 @@ export const DataProvider = ({ children }) => {
   }, []);
 
   return (
-    <DataContext.Provider value={{ posts, setPosts, originalPosts }}>
+    <DataContext.Provider
+      value={{
+        posts,
+        setPosts,
+        originalPosts,
+        currentCategory,
+        setCurrentCategory,
+      }}
+    >
       {children}
     </DataContext.Provider>
   );

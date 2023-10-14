@@ -1,22 +1,16 @@
 'use client';
 import React from 'react';
 import '@radix-ui/themes/styles.css';
-import { createContext, useState } from 'react';
 import { Container, Text } from '@radix-ui/themes';
-import { PinLeftIcon } from '@radix-ui/react-icons';
-import { Search } from './Search';
 import { useData } from '../context/DataContext';
 
-// const SidebarContext = createContext();
-
 export function Sidebar({ categories }) {
-  const [expanded, setExpanded] = useState(true);
-  const [currentCategory, setCurrentCategory] = useState('');
+  const { currentCategory, setCurrentCategory } = useData();
 
   return (
     <Container size='1' className=' w-[15rem]'>
-      <aside className='h-screen'>
-        <nav className='h-full flex flex-col  shadow-sm'>
+      <aside className='h-screen border-r-[1px] border-gray-500/75'>
+        <nav className='h-full flex flex-col shadow-sm pr-5'>
           <ul className='flex-1'>
             {categories.map((category, index) => (
               <SidebarItem
@@ -41,7 +35,6 @@ export function SidebarItem({
   setCurrentCategory,
   alert,
 }) {
-  // const { expanded } = useContext(SidebarContext);
   const expanded = true;
 
   const { setPosts, originalPosts } = useData();

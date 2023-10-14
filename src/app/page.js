@@ -8,7 +8,7 @@ import { CardDocs } from './components/Card';
 
 export default function Post() {
   const [searchValue, setSearchValue] = useState('');
-  const { posts } = useData();
+  const { posts, currentCategory } = useData();
 
   const filteredList = searchValue
     ? posts.filter(({ title }) => {
@@ -48,7 +48,7 @@ export default function Post() {
       ) : (
         <div className='relative h-screen flex-col flex justify-center items-center'>
           <Text as='span' size='6' weight='bold'>
-            {searchValue ? 'Post Not Found' : 'Loading...'}
+            {searchValue || currentCategory ? 'Post Not Found' : 'Loading...'}
           </Text>
         </div>
       )}
