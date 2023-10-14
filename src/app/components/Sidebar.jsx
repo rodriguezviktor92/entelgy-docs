@@ -11,6 +11,7 @@ import { useData } from '../context/DataContext';
 
 export function Sidebar({ categories }) {
   const [expanded, setExpanded] = useState(true);
+  const [currentCategory, setCurrentCategory] = useState('');
 
   return (
     <Container size='1' className=' w-[15rem]'>
@@ -25,7 +26,13 @@ export function Sidebar({ categories }) {
         <nav className='h-full flex flex-col  shadow-sm pt-8'>
           <ul className='flex-1'>
             {categories.map((category, index) => (
-              <SidebarItem key={index} text='male' alert />
+              <SidebarItem
+                key={index}
+                text={category.title}
+                currentCategory={currentCategory}
+                setCurrentCategory={setCurrentCategory}
+                alert
+              />
             ))}
           </ul>
         </nav>
@@ -34,41 +41,44 @@ export function Sidebar({ categories }) {
   );
 }
 
-export function SidebarItem({ icon, text, active, alert }) {
+export function SidebarItem({
+  icon,
+  text,
+  currentCategory,
+  setCurrentCategory,
+  alert,
+}) {
   // const { expanded } = useContext(SidebarContext);
   const expanded = true;
 
-  const { users, setUsers, originalUsers } = useData();
-  const [currentCategory, setCurrentCategory] = useState('');
+  const { setUsers, originalUsers } = useData();
 
   function handlerCategory(category) {
-    if (category === currentCategory) {
-      setUsers(originalUsers.current);
-      setCurrentCategory('');
-      return;
-    }
+    const initialValue = originalUsers.current;
+    const currentCategoryLower = category.toLowerCase();
 
-    const filteredData = users.filter((user) => {
-      return user.gender.toLowerCase() === category;
-    });
-    setUsers(filteredData);
-    setCurrentCategory(category);
+    if (category === currentCategory) {
+      setUsers(initialValue);
+      setCurrentCategory('');
+    } else {
+      const filteredData = initialValue.filter((user) => {
+        return user.gender.toLowerCase() === currentCategoryLower;
+      });
+
+      setUsers(filteredData);
+      setCurrentCategory(category);
+    }
   }
 
   return (
     <li
-      onClick={() => handlerCategory('male')}
+      onClick={() => handlerCategory(text)}
       className={`
         relative flex items-center py-2 my-1
         font-medium rounded-md cursor-pointer
         transition-colors group
-        ${
-          currentCategory === text
-            ? 'bg-gradient-to-tr from-slate-400 to-slate-300 text-indigo-800'
-            : 'hover:bg-gray-600'
-        }
+        ${currentCategory === text ? 'bg-gray-600' : 'hover:bg-gray-600'}
         `}
-      // style={{ background: 'var(--gray-a2)', borderRadius: 'var(--radius-3)' }}
     >
       {icon}
       <span

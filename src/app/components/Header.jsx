@@ -4,7 +4,7 @@ import { Flex, Heading } from '@radix-ui/themes';
 export function Header() {
   return (
     <Flex align='center' justify='between'>
-      <Heading>Entelgy College</Heading>
+      <Heading>Entelgy Docs</Heading>
       <MoonIcon />
     </Flex>
   );
