@@ -1,5 +1,6 @@
 import { Box } from '@radix-ui/themes';
 import Link from 'next/link';
+import { RichText } from '../components/RichText';
 async function searchQuestion() {}
 
 export default async function Category({ params }) {
@@ -20,6 +21,7 @@ export default async function Category({ params }) {
         width='100%'
         display='block'
       ></iframe>
+      <RichText />
     </Box>
   );
 }

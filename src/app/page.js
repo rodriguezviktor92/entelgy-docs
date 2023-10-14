@@ -1,9 +1,10 @@
 'use client';
-import { Box, Card, Container, Grid, Text } from '@radix-ui/themes';
+import { Box, Container, Grid, Text } from '@radix-ui/themes';
 import Link from 'next/link';
 import { Search } from './components/Search';
 import { useState } from 'react';
 import { useData } from './context/DataContext';
+import { CardDocs } from './components/Card';
 
 export default function Post() {
   const [searchValue, setSearchValue] = useState('');
@@ -30,18 +31,12 @@ export default function Post() {
           className='sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
         >
           {filteredList.map(({ gender, email }, index) => (
-            <Box key={index}>
-              <Card asChild>
-                <Link href={`${index}`}>
-                  <Text as='div' size='2' weight='bold'>
-                    {gender}
-                  </Text>
-                  <Text as='div' color='gray' size='2'>
-                    {email}
-                  </Text>
-                </Link>
-              </Card>
-            </Box>
+            <CardDocs
+              key={index}
+              gender={gender}
+              email={email}
+              index={index}
+            ></CardDocs>
           ))}
         </Grid>
       ) : (
