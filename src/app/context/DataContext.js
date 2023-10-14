@@ -10,20 +10,20 @@ export const useData = () => {
 };
 
 export const DataProvider = ({ children }) => {
-  const [users, setUsers] = useState([]);
-  const originalUsers = useRef([]);
+  const [posts, setPosts] = useState([]);
+  const originalPosts = useRef([]);
 
   useEffect(() => {
-    fetch('https://randomuser.me/api/?results=50')
+    fetch('https://entelgy-docs-cms.up.railway.app/api/posts/')
       .then(async (res) => await res.json())
       .then((res) => {
-        setUsers(res.results);
-        originalUsers.current = res.results;
+        setPosts(res.docs);
+        originalPosts.current = res.docs;
       });
   }, []);
 
   return (
-    <DataContext.Provider value={{ users, setUsers, originalUsers }}>
+    <DataContext.Provider value={{ posts, setPosts, originalPosts }}>
       {children}
     </DataContext.Provider>
   );

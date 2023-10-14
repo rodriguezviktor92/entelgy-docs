@@ -1,10 +1,24 @@
 import { Box } from '@radix-ui/themes';
 import Link from 'next/link';
 import { RichText } from '../components/RichText';
-async function searchQuestion() {}
 
-export default async function Category({ params }) {
-  const { slug } = params;
+async function getPost(slug) {
+  const res = await fetch(
+    `https://entelgy-docs-cms.up.railway.app/api/posts/slug/${slug}`,
+    { cache: 'no-store' }
+  );
+  const {
+    videoUrl,
+    description,
+    title,
+    category: { title: categoryTitle },
+  } = await res.json();
+
+  return { videoUrl, description, title, categoryTitle };
+}
+
+export default async function Category({ params: { slug } }) {
+  const { videoUrl, description, title, categoryTitle } = await getPost(slug);
 
   return (
     <Box className='w-full'>
@@ -13,15 +27,17 @@ export default async function Category({ params }) {
           ← Back
         </Link>
       </div>
-      <iframe
-        className='py-4 h-[90vh]'
-        src='https://drive.google.com/file/d/199hPCkOfxgXWFO5DlrEtzDVaivGPshdm/preview'
-        allow='autoplay'
-        height='90vh'
-        width='100%'
-        display='block'
-      ></iframe>
-      <RichText />
+      {videoUrl && (
+        <iframe
+          className='py-4 h-[90vh]'
+          src={videoUrl}
+          allow='autoplay'
+          height='90vh'
+          width='100%'
+          display='block'
+        ></iframe>
+      )}
+      <RichText description={description} />
     </Box>
   );
 }

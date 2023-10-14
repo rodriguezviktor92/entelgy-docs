@@ -130,10 +130,10 @@ const jsonData = {
   ],
 };
 
-export function RichText(props) {
+export function RichText({ description }) {
   return (
     <article className='prose max-w-none pb-4 [&>hr]:hidden [&>h2]:text-2xl [&>h2]:font-bold [&>h2]:text-gray-900 [&>h2]:pb-8 [&>ol]:pb-6 [&>p]:pb-6 [&>p]:text-xl md:[&>p]:text-xl [&>p>strong]:bg-yellow-50 [&_a]:text-blue-700 [&_a:hover]:underline [&>ul>li]:list-disc [&>ul]:text-lg md:[&>ul]:text-xl [&>ul]:text-blue-900 [&>ul]:pb-4 [&>ul>li]:ml-5 [&>ul]:space-y-3 [&>pre]:overflow-x-auto  [&>pre]:rounded-xl [&>pre]:text-white [&>pre]:mb-8 [&>pre]:p-8 [&>pre]:bg-slate-800'>
-      {serialize(jsonData.description)}
+      {serialize(description)}
     </article>
   );
 }

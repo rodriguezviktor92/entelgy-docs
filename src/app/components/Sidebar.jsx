@@ -51,21 +51,21 @@ export function SidebarItem({
   // const { expanded } = useContext(SidebarContext);
   const expanded = true;
 
-  const { setUsers, originalUsers } = useData();
+  const { setPosts, originalPosts } = useData();
 
   function handlerCategory(category) {
-    const initialValue = originalUsers.current;
+    const initialValue = originalPosts.current;
     const currentCategoryLower = category.toLowerCase();
 
     if (category === currentCategory) {
-      setUsers(initialValue);
+      setPosts(initialValue);
       setCurrentCategory('');
     } else {
-      const filteredData = initialValue.filter((user) => {
-        return user.gender.toLowerCase() === currentCategoryLower;
+      const filteredData = initialValue.filter(({ category: { title } }) => {
+        return title.toLowerCase() === currentCategoryLower;
       });
 
-      setUsers(filteredData);
+      setPosts(filteredData);
       setCurrentCategory(category);
     }
   }

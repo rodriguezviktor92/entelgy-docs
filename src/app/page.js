@@ -8,15 +8,13 @@ import { CardDocs } from './components/Card';
 
 export default function Post() {
   const [searchValue, setSearchValue] = useState('');
-  const { users } = useData();
+  const { posts } = useData();
 
   const filteredList = searchValue
-    ? users.filter((user) => {
-        return user.name.first
-          .toLowerCase()
-          .includes(searchValue.toLowerCase());
+    ? posts.filter(({ title }) => {
+        return title.toLowerCase().includes(searchValue.toLowerCase());
       })
-    : users;
+    : posts;
 
   return (
     <Box className='w-full'>
@@ -30,14 +28,22 @@ export default function Post() {
           pt='6'
           className='sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
         >
-          {filteredList.map(({ gender, email }, index) => (
-            <CardDocs
-              key={index}
-              gender={gender}
-              email={email}
-              index={index}
-            ></CardDocs>
-          ))}
+          {filteredList.map(
+            ({
+              category: { title: categoryTitle, color: categoryColor },
+              title,
+              slug,
+              id,
+            }) => (
+              <CardDocs
+                key={id}
+                category={categoryTitle}
+                categoryColor={categoryColor}
+                title={title}
+                slug={slug}
+              ></CardDocs>
+            )
+          )}
         </Grid>
       ) : (
         <div className='relative h-screen flex-col flex justify-center items-center'>
