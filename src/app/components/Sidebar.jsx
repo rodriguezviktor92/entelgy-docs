@@ -15,15 +15,8 @@ export function Sidebar({ categories }) {
 
   return (
     <Container size='1' className=' w-[15rem]'>
-      <div className='flex gap-2 justify-start'>
-        <button className='p-1.5 rounded-lg'>
-          <PinLeftIcon />
-        </button>
-        <Search />
-      </div>
-
       <aside className='h-screen'>
-        <nav className='h-full flex flex-col  shadow-sm pt-8'>
+        <nav className='h-full flex flex-col  shadow-sm'>
           <ul className='flex-1'>
             {categories.map((category, index) => (
               <SidebarItem
