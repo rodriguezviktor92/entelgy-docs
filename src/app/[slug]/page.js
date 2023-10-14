@@ -1,4 +1,4 @@
-import { Box } from '@radix-ui/themes';
+import { Badge, Box, Flex, Heading, Separator } from '@radix-ui/themes';
 import Link from 'next/link';
 import { RichText } from '../components/RichText';
 
@@ -11,14 +11,15 @@ async function getPost(slug) {
     videoUrl,
     description,
     title,
-    category: { title: categoryTitle },
+    category: { title: categoryTitle, color: categoryColor },
   } = await res.json();
 
-  return { videoUrl, description, title, categoryTitle };
+  return { videoUrl, description, title, categoryTitle, categoryColor };
 }
 
 export default async function Category({ params: { slug } }) {
-  const { videoUrl, description, title, categoryTitle } = await getPost(slug);
+  const { videoUrl, description, title, categoryTitle, categoryColor } =
+    await getPost(slug);
 
   return (
     <Box className='w-full'>
@@ -27,6 +28,17 @@ export default async function Category({ params: { slug } }) {
           ← Back
         </Link>
       </div>
+      <Flex direction='column' gap='4' py='6'>
+        <Flex justify='between' className=' items-center'>
+          <Heading as='h1'>{title}</Heading>
+          <Badge size='1' color={categoryColor} style={{ height: 20 }}>
+            {categoryTitle}
+          </Badge>
+        </Flex>
+
+        <Separator orientation='horizontal' size='4' />
+      </Flex>
+
       {videoUrl && (
         <iframe
           className='py-4 h-[90vh]'
@@ -37,7 +49,7 @@ export default async function Category({ params: { slug } }) {
           display='block'
         ></iframe>
       )}
-      <RichText description={description} />
+      {description && <RichText description={description} />}
     </Box>
   );
 }

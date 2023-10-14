@@ -1,17 +1,21 @@
-import { Badge, Box, Card, Flex, Text } from '@radix-ui/themes';
+import { Badge, Box, Card, Flex, Text, Tooltip } from '@radix-ui/themes';
 import Link from 'next/link';
 
 export function CardDocs({ category, categoryColor, title, slug }) {
   return (
     <Box>
-      <Card asChild>
+      <Card asChild style={{ height: 100 }}>
         <Link href={`${slug}`}>
           <Flex justify='end'>
-            <Badge color={categoryColor}>{category}</Badge>
+            <Badge size='1' color={categoryColor}>
+              {category}
+            </Badge>
           </Flex>
-          <Text as='div' color='gray' size='2'>
-            {title}
-          </Text>
+          <Tooltip content={title}>
+            <Text as='p' color='gray' size='3' className='pt-1 line-clamp-2'>
+              {title}
+            </Text>
+          </Tooltip>
         </Link>
       </Card>
     </Box>
