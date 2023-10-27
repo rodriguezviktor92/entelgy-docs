@@ -16,7 +16,7 @@ export const DataProvider = ({ children }) => {
   const originalPosts = useRef([]);
 
   useEffect(() => {
-    fetch('https://entelgy-docs-cms.up.railway.app/api/posts/')
+    fetch('https://entelgy-docs-cms.onrender.com/api/posts/')
       .then(async (res) => await res.json())
       .then((res) => {
         setPosts(res.docs);

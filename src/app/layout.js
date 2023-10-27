@@ -16,7 +16,7 @@ export const metadata = {
 
 async function getCategories() {
   const res = await fetch(
-    'https://entelgy-docs-cms.up.railway.app/api/category/',
+    'https://entelgy-docs-cms.onrender.com/api/category/',
     { cache: 'no-store' }
   );
   const { docs } = await res.json();

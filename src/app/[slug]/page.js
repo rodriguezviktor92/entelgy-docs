@@ -4,7 +4,7 @@ import { RichText } from '../components/RichText';
 
 async function getPost(slug) {
   const res = await fetch(
-    `https://entelgy-docs-cms.up.railway.app/api/posts/slug/${slug}`,
+    `https://entelgy-docs-cms.onrender.com/api/posts/slug/${slug}`,
     { cache: 'no-store' }
   );
   const {
